@@ -9,6 +9,8 @@ page = requests.get(url)
 soup = BeautifulSoup(page.text, 'html.parser')
 header = soup.find('tr', attrs={'class':'colhead'})
 columns = [col.get_text() for col in header.find_all('td')]
+columns.append('TB')
+columns.append('RC')
 
 # Create a DataFrame with column names from above.
 player_df = pd.DataFrame(columns=columns)
@@ -29,6 +31,22 @@ for i in range(1,301,50):
     for player in players:
         # Get the stats for each player.
         stats = [stat.get_text() for stat in player.find_all('td')]
+        H = int(stats[6])
+        second_B = int(stats[7])
+        third_B = int(stats[8])
+        HR = int(stats[9])
+
+        # Calculates players 'total bases' and appends to stats.
+        TB = H + 2*second_B + 3*third_B + 4*HR
+        stats.append(TB)
+
+        H = int(stats[6])
+        BB = int(stats[11])
+        AB = int(stats[4])
+
+        # Calculates players 'runs created' and appends to stats.
+        RC = (H+BB) * TB/(AB+BB)
+        stats.append(RC)
 
         # Create a temp DataFrame for current player's stats.
         temp_df = pd.DataFrame(stats).transpose()
