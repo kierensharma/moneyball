@@ -37,4 +37,4 @@ for i in range(1,301,50):
         # Concatenate temp_df with player_df
         player_df = pd.concat([player_df,temp_df], ignore_index=True)
 
-player_df.to_csv(r"mls_stats.csv", index=False, sep=',', encoding='utf-8')
+player_df.to_csv(r"mlb_stats.csv", index=False, sep=',', encoding='utf-8')
