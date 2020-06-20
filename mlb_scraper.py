@@ -12,7 +12,7 @@ columns = [col.get_text() for col in header.find_all('td')]
 columns.append('TB')
 columns.append('RC')
 
-# Create a DataFrame with column names from above.
+# Use headers taken from the soup as the column names in the DataFrame.
 player_df = pd.DataFrame(columns=columns)
 
 # For loop to iterate through each page of 50 players.
